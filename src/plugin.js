@@ -8,6 +8,7 @@ import { concat, merge, keys } from './utils/index.js';
 import normalizeEntry from './normalizeEntry';
 
 import createMemory from './createMemory';
+console.log(1);
 
 export const getManifestPath = bundleName =>
   path.resolve(cacheDir, `${bundleName}.manifest.json`);
@@ -35,7 +36,8 @@ class Plugin {
   apply(compiler) {
     const { context, inject, entry, path: outputPath } = this.settings;
     
-    const publicPath = (filename) => path.join(outputPath, filename);
+    const distPath = (filename) => path.join(outputPath, filename);
+    const publicPath = filename => _path2.default.join(compiler.options.output.publicPath, filename);
 
     keys(entry).map(getManifestPath)
       .forEach(manifestPath => {
@@ -70,7 +72,7 @@ class Plugin {
       const assets = memory.getBundles()
         .map(({ filename, buffer }) => {
           return {
-            [publicPath(filename)]: {
+            [distPath(filename)]: {
               source: () => buffer.toString(),
               size: () => buffer.length
             }
