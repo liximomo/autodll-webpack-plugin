@@ -8,7 +8,6 @@ import { concat, merge, keys } from './utils/index.js';
 import normalizeEntry from './normalizeEntry';
 
 import createMemory from './createMemory';
-console.log(1);
 
 export const getManifestPath = bundleName =>
   path.resolve(cacheDir, `${bundleName}.manifest.json`);
